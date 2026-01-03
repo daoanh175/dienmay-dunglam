@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Điện máy Dũng Lam – Điện máy gia dụng Thái Nguyên</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; }
+    header { background: #0f172a; color: #fff; padding: 20px; text-align: center; }
+    header h1 { margin: 0; }
+    header p { margin: 6px 0 0; }
+    .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+    .info { background: #fff; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .card img { width: 100%; border-radius: 6px; }
+    .card h3 { margin: 8px 0; font-size: 16px; }
+    .price { color: #dc2626; font-weight: bold; }
+    button { background: #2563eb; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .cart { margin-top: 24px; background: #fff; padding: 16px; border-radius: 8px; }
+    footer { background: #020617; color: #cbd5f5; text-align: center; padding: 16px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Điện Máy Dũng Lam</h1>
+    <p>Chuyên điện máy – điện lạnh – gia dụng</p>
+    <p>
+      📞 <a href="tel:0334269460" style="color:#fff">0334 269 460</a> – 
+      <a href="tel:0969528319" style="color:#fff">0969 528 319</a>
+    </p>
+    <div style="margin-top:10px">
+      <a href="tel:0334269460" style="background:#22c55e;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;margin-right:6px">📞 Gọi ngay</a>
+      <a href="https://zalo.me/0334269460" target="_blank" style="background:#2563eb;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;margin-right:6px">Zalo</a>
+      <a href="https://facebook.com" target="_blank" style="background:#1877f2;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none">Facebook</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="info">
+      <h2>Thông tin cửa hàng</h2>
+      <p><strong>Địa chỉ:</strong> Trung Nhăng, Quân Chu, Thái Nguyên</p>
+      <p>Nhận lắp đặt – bảo hành – giao hàng tận nơi</p>
+      <iframe 
+        src="https://www.google.com/maps?q=Trung%20Nhăng%20Quân%20Chu%20Thái%20Nguyên&output=embed"
+        width="100%" height="250" style="border:0;border-radius:8px" loading="lazy">
+      </iframe>
+    </div>
+
+    <h2>Sản phẩm tiêu biểu</h2>
+    <div class="products" id="productList"></div>
+
+    <div class="cart">
+      <h2>Giỏ hàng</h2>
+      <ul id="cartList"></ul>
+      <p><strong>Tổng tiền: </strong><span id="total">0</span> VND</p>
+      <p><em>Liên hệ cửa hàng để chốt đơn và vận chuyển</em></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Điện Máy Dũng Lam – Trung Nhăng, Quân Chu, Thái Nguyên</p>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, name: "Tủ lạnh Aqua 180L", price: 4200000 },
+      { id: 2, name: "Máy giặt LG 8kg", price: 5300000 },
+      { id: 3, name: "Điều hòa Casper 9000BTU", price: 6800000 },
+      { id: 4, name: "Nồi cơm điện Sharp", price: 890000 }
+      // Thêm sản phẩm mới tại đây
+    ];
+
+    const cart = [];
+
+    const productList = document.getElementById("productList");
+    const cartList = document.getElementById("cartList");
+    const totalEl = document.getElementById("total");
+
+    function renderProducts() {
+      products.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <img src="https://via.placeholder.com/300x200" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p class="price">${p.price.toLocaleString()} VND</p>
+          <button onclick="addToCart(${p.id})">Thêm vào giỏ</button>
+        `;
+        productList.appendChild(div);
+      });
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      cart.push(product);
+      renderCart();
+    }
+
+    function renderCart() {
+      cartList.innerHTML = "";
+      let total = 0;
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} – ${item.price.toLocaleString()} VND`;
+        cartList.appendChild(li);
+        total += item.price;
+      });
+      totalEl.textContent = total.toLocaleString();
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
